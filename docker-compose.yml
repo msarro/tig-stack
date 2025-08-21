@@ -7,7 +7,7 @@ services:
         ports:
             - ${INFLUXDB_PORT}:${INFLUXDB_PORT}
         volumes:
-            - /var/lib/influxdb:/var/lib/influxdb
+            - influxdb_data:/var/lib/influxdb
         restart: always
         env_file:
             - .env
@@ -38,9 +38,9 @@ services:
         links:
             - influxdb
         volumes:
-            - /var/lib/grafana
-            - /var/log/grafana
-            - /var/lib/grafana/plugins
+            - grafana_lib:/var/lib/grafana
+            - grafana_log:/var/log/grafana
+            - grafana_plugins:/var/lib/grafana/plugins
         restart: always
         env_file:
             - .env
@@ -50,3 +50,13 @@ services:
 networks:
     backend:
     frontend:
+
+volumes:
+    influxdb_data:
+        name: influxdb_data
+    grafana_lib:
+        name: grafana_lib
+    grafana_log:
+        name: grafana_log
+    grafana_plugins:
+        name: grafana_plugins
