@@ -46,6 +46,19 @@ services:
             - .env
         networks:
             - frontend
+    
+    nodered:
+        build: ./nodered
+        container_name: ${CONTAINER_PREFIX}_nodered
+        ports: 
+            - ${NODERED_PORT}:${NODERED_PORT}
+        volumes:
+            - node_red_data:/data
+        restart: always
+        env_file:
+            - .env
+        networks:
+            - frontend
 
 networks:
     backend:
@@ -60,3 +73,5 @@ volumes:
         name: grafana_log
     grafana_plugins:
         name: grafana_plugins
+    node_red_data:
+        name: node_red_data
